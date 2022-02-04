@@ -1,0 +1,13 @@
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\bin\Debug\netcoreapp3.1\Sorting-algorithms.exe
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\bin\Debug\netcoreapp3.1\Sorting-algorithms.deps.json
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\bin\Debug\netcoreapp3.1\Sorting-algorithms.runtimeconfig.json
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\bin\Debug\netcoreapp3.1\Sorting-algorithms.runtimeconfig.dev.json
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\bin\Debug\netcoreapp3.1\Sorting-algorithms.dll
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\bin\Debug\netcoreapp3.1\Sorting-algorithms.pdb
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\obj\Debug\netcoreapp3.1\Sorting-algorithms.csprojAssemblyReference.cache
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\obj\Debug\netcoreapp3.1\Sorting-algorithms.AssemblyInfoInputs.cache
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\obj\Debug\netcoreapp3.1\Sorting-algorithms.AssemblyInfo.cs
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\obj\Debug\netcoreapp3.1\Sorting-algorithms.csproj.CoreCompileInputs.cache
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\obj\Debug\netcoreapp3.1\Sorting-algorithms.dll
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\obj\Debug\netcoreapp3.1\Sorting-algorithms.pdb
+C:\Users\loke_\Documents\GitHub\Sorting-algorithms\obj\Debug\netcoreapp3.1\Sorting-algorithms.genruntimeconfig.cache
