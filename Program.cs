@@ -7,25 +7,9 @@ namespace Sorting_algorithms
     class Program
     {
         const int globalArrayLength = 10;
-
-
-        static void Main(string[] args)
-        {
-            Stopwatch stopwatch = new Stopwatch();
- 
-            int[] array = GenerateUnsorte§dArray(10, 0, 10);
-            PrintArray(array);
-            //array = BubbleSort(array);
-            //array = SelectionSort(array);
-            stopwatch.Start();
-            array = InsertionSort(array);
-            stopwatch.Stop();
-            PrintArray(array);
-    
-            Console.WriteLine("Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds);
-        }
-
-
+        const int globalMinVal = 0;
+        const int globalMaxVal = 10;
+        
 
         static int[] GenerateUnsortedArray(int arrayLength, int minVal, int maxVal){
             Random rand = new Random();
@@ -45,6 +29,34 @@ namespace Sorting_algorithms
             Console.WriteLine(array[array.Length - 1]);
             Console.WriteLine("");
         }
+
+        static void Main(string[] args)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+ 
+            int[] array = GenerateUnsortedArray(globalArrayLength, globalMinVal, globalMaxVal);
+            PrintArray(array);
+
+
+
+            stopwatch.Start();
+
+            //array = BubbleSort(array);
+            //array = SelectionSort(array);
+            array = InsertionSort(array);
+            array = MergeSort(array);
+            array = QuickSort(array);
+
+            stopwatch.Stop();
+
+
+
+            PrintArray(array);
+            Console.WriteLine("Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds);
+        }
+
+
+
 
         static void Swap(ref int a, ref int b){  
             a = a+b;
@@ -90,6 +102,34 @@ namespace Sorting_algorithms
             return array;
         }
         static int[] MergeSort(int[] array){
+            return array;
+        }
+        //Delar upp arrayA i två delar och sortera arrayA's halvor in i arrayB. Sortera sedan ihop halvorna från arrayB och lägg in hela sorterade arrayen i arrayA
+        /// <summary>
+        /// beginIndex och endIndex utgör start- och slutIndex för en delarray
+        /// </summary>
+        static void SplitAndMergeArray(ref int[] arrayB, int beginIndex, int endIndex, ref int[] arrayA){
+            //Returnerar om del-arrayen har längden 1 eller mindre.
+            if((endIndex - beginIndex) <= 1) return; 
+
+            int midIndex = (beginIndex + endIndex) / 2;
+
+            SplitAndMergeArray(ref arrayA, beginIndex, midIndex, ref arrayB);
+            SplitAndMergeArray(ref arrayA, midIndex, endIndex, ref arrayB);
+        }
+        //Merges two sorted halves of arrayA into sorted arrayB
+        static void MergeArrays(ref int[] arrayA, int beginIndex, int midIndex, int endIndex, ref int[] arrayB){
+            int a = beginIndex, b = midIndex;
+
+            for(int l = beginIndex; l < endIndex; l++){
+                //Copies rest of array if a nd b is outside their bounds
+                if(a >= midIndex && b >= endIndex)
+                {
+                    arrayB[l] = arrayA[l];
+                }
+            }
+        }
+        static int[] QuickSort(int[] array){
             return array;
         }
     }
