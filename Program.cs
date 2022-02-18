@@ -6,7 +6,7 @@ namespace Sorting_algorithms
 {
     class Program
     {
-        const int globalArrayLength = 4;
+        const int globalArrayLength = 10;
         const int globalMinVal = -9;
         const int globalMaxVal = 10;
         static bool printArrays = true;
@@ -153,21 +153,40 @@ namespace Sorting_algorithms
             }
         }
         static int[] QuickSort(int[] array){
-            int pivotIndex = array.Length / 2 - 1;
 
-            
+            SortByPivot(ref array, 0, array.Length);
 
-            for(int i = 0; i < array.Length; i++){
-                if(i == pivotIndex) continue;
-
-                if(array[pivotIndex] > array[i]){
-                    Insert(ref array, i, pivotIndex + 1);
-                }
-                else if(array[pivotIndex] < array[i]){
-                    Insert(ref array, i, pivotIndex - 1);
-                }
-            }
             return array;
+        }
+
+        /// <param name="beginIndex">Is inclusive</param>
+        /// <param name="endIndex">Is exclusive</param>
+        static void SortByPivot(ref int[] array, int beginIndex, int endIndex){
+            if(endIndex - beginIndex <= 1) return; //Returns if subarray is the length of one element or smaller
+            
+            int pivotIndex = ((beginIndex + endIndex) / 2) - 1;
+
+            int leftPointer = beginIndex;
+            int rightPointer = endIndex - 1;
+
+            //Move left pointer through array
+            while(leftPointer < rightPointer){
+                if(array[leftPointer] >= array[pivotIndex]){
+                    //Start moving right pointer through array
+                    while(leftPointer < rightPointer){
+                        if(array[rightPointer] < array[pivotIndex]){
+                            Swap(ref array[rightPointer], ref array[leftPointer]);
+                        }
+                        rightPointer--;
+                        if(rightPointer < 0) return;
+                    }
+                }
+                leftPointer++;
+                if(leftPointer >= endIndex) return;
+            }
+            //Right pointer is the inclusive for latter part of subarray and is the exclusive for the first part of subarray.
+            SortByPivot(ref array, beginIndex, rightPointer);
+            SortByPivot(ref array, rightPointer, endIndex);
         }
 
         //Insert moves an index to aposition in array while pushing up other elements into the array
