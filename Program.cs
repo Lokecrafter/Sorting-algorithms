@@ -8,7 +8,7 @@ namespace Sorting_algorithms
     {
         const int globalArrayLength = 10;
         const int globalMinVal = -9;
-        const int globalMaxVal = 10;
+        const int globalMaxVal = 20;
         static bool printArrays = true;
         
 
@@ -21,7 +21,6 @@ namespace Sorting_algorithms
             }
             return array;
         }
-
         static void PrintArray(int[] array){
             if(!printArrays) return;
 
@@ -32,6 +31,14 @@ namespace Sorting_algorithms
             Console.WriteLine(array[array.Length - 1]);
             Console.WriteLine("");
         }
+        static void Swap(ref int a, ref int b){  
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+
+
+
 
         static void Main(string[] args)
         {
@@ -47,23 +54,18 @@ namespace Sorting_algorithms
             //array = BubbleSort(array);
             //array = SelectionSort(array);
             //array = InsertionSort(array);
-            //array = MergeSort(array);
-            array = QuickSort(array);
+            array = MergeSort(array);
+            //array = QuickSort(array);
 
             stopwatch.Stop();
 
             PrintArray(array);
             Console.WriteLine("Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds);
-        }
+        }   
 
 
 
 
-        static void Swap(ref int a, ref int b){  
-            a = a+b;
-            b = a-b;
-            a = a-b;
-        }
 
         static int[] BubbleSort(int[] array){
             for(int i = 0; i < array.Length; i++){
@@ -75,10 +77,12 @@ namespace Sorting_algorithms
             }
             return array;
         }
+
+
+
         //Delar upp arrayen i en sorterad och en osorterad del. 
         //Genom att jämföra array[j] mot varje element i arrayen efter j så kan man byta plats på array[j] och array[j + (x-steg)] om array[j + (x-steg)] är mindre än array[j]
         static int[] SelectionSort(int[] array){  
-            Console.WriteLine("Running SelectionSort"); 
             for(int j = 0; j < array.Length - 1; j++){
                 for(int i = j + 1; i < array.Length; i++){
                     if(array[j] > array[i]){
@@ -88,8 +92,10 @@ namespace Sorting_algorithms
             }
             return array;
         }
+
+
+
         static int[] InsertionSort(int[] array){
-            Console.WriteLine("Running Insertionsort");
             //Starta på andra elementet 
             for(int j = 1; j < array.Length; j++){
                 //Loopa genom föregående element
@@ -104,8 +110,12 @@ namespace Sorting_algorithms
             }
             return array;
         }
+
+
+
+
+
         static int[] MergeSort(int[] arrayA){
-            Console.WriteLine("Running Mergesort");
             //Kopierar arrayA till arrayB
             int[] arrayB = new int[arrayA.Length];
             for(int i = 0; i < arrayA.Length; i++){
@@ -115,12 +125,10 @@ namespace Sorting_algorithms
             return arrayA;
         }
         //Delar upp arrayA i två delar och sortera arrayA's halvor in i arrayB. Sortera sedan ihop halvorna från arrayB och lägg in hela sorterade arrayen i arrayA
-        /// <summary>
-        /// beginIndex och endIndex utgör start- och slutIndex för en delarray
-        /// </summary>
+        //beginIndex och endIndex utgör start- och slutIndex för en delarray
         static void SplitAndMergeArray(ref int[] arrayB, int beginIndex, int endIndex, ref int[] arrayA){
             //Returnerar om del-arrayen har längden 1 eller mindre.
-            if((endIndex - beginIndex) <= 1) return; 
+            if(beginIndex >= endIndex - 1) return; 
 
             int midIndex = (beginIndex + endIndex) / 2;
 
@@ -152,59 +160,48 @@ namespace Sorting_algorithms
                 }
             }
         }
-        static int[] QuickSort(int[] array){
 
-            SortByPivot(ref array, 0, array.Length);
+
+
+
+        static int[] QuickSort(int[] array){
+            QuickSort(ref array, 0, array.Length - 1);
 
             return array;
         }
 
         /// <param name="beginIndex">Is inclusive</param>
-        /// <param name="endIndex">Is exclusive</param>
-        static void SortByPivot(ref int[] array, int beginIndex, int endIndex){
-            if(endIndex - beginIndex <= 1) return; //Returns if subarray is the length of one element or smaller
+        /// <param name="endIndex">Is inclusive</param>
+        static void QuickSort(ref int[] array, int beginIndex, int endIndex){
+            //Console.Write("PivotIndex is: (" + ((beginIndex + endIndex) / 2) + ")   ");
+            //PrintArray(array);
+            if(beginIndex >= endIndex) return; //Returns if subarray is the length of one element or smaller
+
+            int pivot = array[(beginIndex + endIndex) / 2];
+            int pivotIndex = Partition(ref array, beginIndex, endIndex, pivot);
             
-            int pivotIndex = ((beginIndex + endIndex) / 2) - 1;
 
-            int leftPointer = beginIndex;
-            int rightPointer = endIndex - 1;
 
-            //Move left pointer through array
-            while(leftPointer < rightPointer){
-                if(array[leftPointer] >= array[pivotIndex]){
-                    //Start moving right pointer through array
-                    while(leftPointer < rightPointer){
-                        if(array[rightPointer] < array[pivotIndex]){
-                            Swap(ref array[rightPointer], ref array[leftPointer]);
-                        }
-                        rightPointer--;
-                        if(rightPointer < 0) return;
-                    }
-                }
-                leftPointer++;
-                if(leftPointer >= endIndex) return;
-            }
-            //Right pointer is the inclusive for latter part of subarray and is the exclusive for the first part of subarray.
-            SortByPivot(ref array, beginIndex, rightPointer);
-            SortByPivot(ref array, rightPointer, endIndex);
+            QuickSort(ref array, beginIndex, pivotIndex - 1);
+            QuickSort(ref array, pivotIndex, endIndex);
         }
-
-        //Insert moves an index to aposition in array while pushing up other elements into the array
-        static void Insert(ref int[] array, int indexToMove, int indexToInsertAt){
-            int direction = indexToInsertAt - indexToMove;
-
-            if(direction < 0){
-                //Move left in array
-                for(int i = indexToMove; i > indexToInsertAt; i--){
-                    Swap(ref array[i], ref array[i - 1]);
+        static int Partition(ref int[] array, int leftPointer, int rightPointer, int pivot){
+            //Move left pointer through array and sort until there are two partitions
+            while(leftPointer <= rightPointer){
+                while(array[leftPointer] < pivot){
+                    leftPointer++;
+                }
+                while(array[rightPointer] > pivot){
+                    rightPointer--;
+                }
+                //Unless leftPointer <= rightPointer then it is guaranteed that the value on array[leftPointer] is larger than the value on array[rightPointer]
+                if(leftPointer <= rightPointer){
+                    Swap(ref array[leftPointer], ref array[rightPointer]);
+                    leftPointer++;
+                    rightPointer--;
                 }
             }
-            else if(direction > 0){
-                //Move right in array
-                for(int i = indexToMove; i < indexToInsertAt; i++){
-                    Swap(ref array[i], ref array[i + 1]);
-                }
-            }
+            return leftPointer;
         }
     }
 }
